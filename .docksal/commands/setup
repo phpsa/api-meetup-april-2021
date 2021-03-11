@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+fin mkcert create
+fin start
+fin composer install
+fin artisan key:generate
+fin artisan migrate
+fin artisan storage:link
