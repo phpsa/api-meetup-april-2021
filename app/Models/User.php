@@ -2,14 +2,22 @@
 
 namespace App\Models;
 
+use App\Models\Traits\HasPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasRoles;
+    use SoftDeletes;
+    use HasPassword;
 
     /**
      * The attributes that are mass assignable.
