@@ -35,7 +35,7 @@ class UserController extends Controller
      */
     public function store(UserRequest $request)
     {
-         return $this->handleStoreAction($request);
+        return $this->handleStoreAction($request);
     }
 
     /**

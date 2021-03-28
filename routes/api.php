@@ -16,7 +16,7 @@ use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 */
 
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware(['web','auth'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
@@ -26,6 +26,12 @@ Route::group([
     'middleware' => ['web']
 ], function () {
     Route::post('/register', [RegisteredUserController::class, 'store'])->middleware(['guest']);
-    Route::apiresource('users', \App\Http\Controllers\Api\UserController::class)->only(['index','store','destroy','show','update']);
+});
 
+Route::group([
+    'as'         => 'auth',
+    'prefix'     => 'auth',
+    'middleware' => ['auth']
+], function () {
+    Route::apiresource('users', \App\Http\Controllers\Api\UserController::class)->only(['index','store','destroy','show','update']);
 });
