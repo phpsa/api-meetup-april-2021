@@ -18,7 +18,7 @@
         "laravel/passport": "^10.1",
         "laravel/sanctum": "^2.9",
         "laravel/tinker": "^2.5",
-        "phpsa/laravel-api-controller": "^2.1",
+        "phpsa/laravel-api-controller": "2.2.1",
         "phpsa/laravel-postman": "^2.2",
         "spatie/laravel-permission": "^4.0"
     },

@@ -42,9 +42,12 @@ Route::group([
     'prefix' => 'blog',
 ], function () {
     Route::apiresource('categories', \App\Http\Controllers\Api\Blog\CategoryController::class)->only(['index','show']);
+    Route::apiresource('posts', \App\Http\Controllers\Api\Blog\PostController::class)->only(['index','show']);
 
     Route::group(['middleware' => ['auth']], function () {
 
         Route::apiresource('categories', \App\Http\Controllers\Api\Blog\CategoryController::class)->only(['store','destroy','update']);
+        Route::apiresource('posts', \App\Http\Controllers\Api\Blog\PostController::class)->only(['store','destroy','update']);
+        Route::put('posts/publish/{post}', [\App\Http\Controllers\Api\Blog\PostController::class, 'publish'])->name('post.publish');
     });
 });

@@ -19,7 +19,10 @@ class UserResource extends ApiResource
      *
      * @var array|null
      */
-    protected static $defaultFields = null;
+    protected static $defaultFields = [
+        'id',
+        'name'
+    ];
 
     /**
      * Allowable fields to be used.
@@ -43,6 +46,9 @@ class UserResource extends ApiResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+
+        $data = parent::toArray($request);
+        $data['roles'] = collect($data['roles'])->map(fn($role) => $role['name'])->toArray();
+        return $data;
     }
 }

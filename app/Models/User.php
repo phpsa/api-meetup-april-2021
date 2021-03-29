@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Blog\Category;
+use App\Models\Blog\Post;
 use App\Models\Traits\HasPassword;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -46,4 +48,14 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function categories()
+    {
+        return $this->hasManyThrough(Category::class, Post::class);
+    }
 }

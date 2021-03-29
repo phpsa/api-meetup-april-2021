@@ -121,6 +121,14 @@ deleted_at
 So at this point lets start boilerplating what we need:
 
 1. User Already exists so lets look at the next bit:
-2. Cagetgories
+2. Categories
+    - php artisan make:api "Blog/CategoryController"
+3. Posts
 
--   php artisan make:api CategoryController
+-   php artisan make:api "Blog/PostController"
+
+Relationship setups:
+
+-   Post -> Category
+-   Post -> User
+-   User -> Category -> Post

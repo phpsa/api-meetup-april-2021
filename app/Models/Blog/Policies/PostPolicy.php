@@ -2,11 +2,11 @@
 
 namespace App\Models\Blog\Policies;
 
-use App\Models\Blog\Category;
+use App\Models\Blog\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CategoryPolicy
+class PostPolicy
 {
     use HandlesAuthorization;
 
@@ -18,17 +18,17 @@ class CategoryPolicy
      */
     public function viewAny(?User $user)
     {
-        return true; //Note teh?User to allow public access to this
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Blog\Category  $category
+     * @param  \App\Models\Blog\Post  $post
      * @return mixed
      */
-    public function view(?User $user, Category $category)
+    public function view(?User $user, Post $post)
     {
         return true;
     }
@@ -41,55 +41,55 @@ class CategoryPolicy
      */
     public function create(User $user)
     {
-        return $user->can('blog-category-create');
+        return $user->can('blog-post-create');
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Blog\Category  $category
+     * @param  \App\Models\Blog\Post  $post
      * @return mixed
      */
-    public function update(User $user, Category $category)
+    public function update(User $user, Post $post)
     {
-        return $user->can('blog-category-update');
+        return $user->can('blog-post-update') || $user->can('manage_own_post', $post);
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Blog\Category  $category
+     * @param  \App\Models\Blog\Post  $post
      * @return mixed
      */
-    public function delete(User $user, Category $category)
+    public function delete(User $user, Post $post)
     {
-        return $user->can('blog-category-delete');
+        return $user->can('blog-post-delete') || $user->can('manage_own_post', $post);
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Blog\Category  $category
+     * @param  \App\Models\Blog\Post  $post
      * @return mixed
      */
-    public function restore(User $user, Category $category)
+    public function restore(User $user, Post $post)
     {
-        return $user->can('blog-category-restore');
+        return $user->can('blog-post-restore');
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Blog\Category  $category
+     * @param  \App\Models\Blog\Post  $post
      * @return mixed
      */
-    public function forceDelete(User $user, Category $category)
+    public function forceDelete(User $user, Post $post)
     {
-        return false; //no force deleting
+        return false;
     }
 
     /**
@@ -102,8 +102,7 @@ class CategoryPolicy
      */
     public function qualifyCollectionQueryWithUser(?User $user, $builder): void
     {
-        //explain this before removing it.
-        //relate it to a global scope
+        //
     }
 
     /**
@@ -116,7 +115,7 @@ class CategoryPolicy
      */
     public function qualifyItemQueryWithUser(?User $user, $builder): void
     {
-        // tied to above
+        //
     }
 
     /**
@@ -129,7 +128,9 @@ class CategoryPolicy
      */
     public function qualifyStoreDataWithUser(User $user, array $data): array
     {
-        //how this could be used to autmatically add fields to an insert!
+        if (! isset($data['user_id']) || empty($data['user_id'])) {
+            $data['user_id'] = auth()->user()->id;
+        }
         return $data;
     }
 
@@ -143,7 +144,6 @@ class CategoryPolicy
      */
     public function qualifyUpdateDataWithUser(User $user, array $data): array
     {
-        //as above
         return $data;
     }
 }

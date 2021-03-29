@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\UserResource;
 use Phpsa\LaravelApiController\Http\Resources\ApiResource;
 
-class CategoryResource extends ApiResource
+class PostResource extends ApiResource
 {
 
     /**
@@ -13,8 +14,8 @@ class CategoryResource extends ApiResource
      * @var array|null
      */
     protected static $mapResources = [
-        'posts'    => PostResourceCollection::class,
-        'allposts' => PostResourceCollection::class
+        'user'     => UserResource::class,
+        'category' => CategoryResource::class
     ];
 
     /**
@@ -23,8 +24,15 @@ class CategoryResource extends ApiResource
      * @var array|null
      */
     protected static $defaultFields = [
-        'id',
-        'title'
+        "id",
+        "title",
+        "image",
+        "description",
+        "user_id",
+        "category_id",
+        "created_at",
+        "updated_at",
+        "published_at",
     ];
 
     /**
@@ -40,11 +48,9 @@ class CategoryResource extends ApiResource
      * @var array|null
      */
     protected static $allowedScopes = [
-        'withTrashed',
-        'onlyTrashed',
+        'scopeWithUnPublished',
+        'withTrashed'
     ];
-
-    //our admin may need to restore deleted items.
 
     /**
      * Transform the resource into an array.
