@@ -38,14 +38,14 @@ Head over to laravel.com and follow the install instructions that suit you.
 
 we add a few tools to our general setup
 
-doctrine/dbal - deals with DB column updates (SQLite testing )
-laravel/fortify - general Auth logic (without view logic built in - see breeze / jetstream for alternatives)
-laravel/sanctum - for SPA Auth (see postman for Oauth2)
-imanghafoori/laravel-microscope
-squizlabs/php_codesniffer
-beyondcode/laravel-self-diagnosis
-barryvdh/laravel-ide-helper
-nunomaduro/phpinsights
-roave/security-advisories:dev-latest
+-   doctrine/dbal - deals with DB column updates (SQLite testing )
+-   laravel/fortify - general Auth logic (without view logic built in - see breeze / jetstream for alternatives)
+-   laravel/sanctum - for SPA Auth (see postman for Oauth2)
+-   imanghafoori/laravel-microscope
+-   squizlabs/php_codesniffer
+-   beyondcode/laravel-self-diagnosis
+-   barryvdh/laravel-ide-helper
+-   nunomaduro/phpinsights
+-   roave/security-advisories:dev-latest
 
 There is no shortage of these tools.
