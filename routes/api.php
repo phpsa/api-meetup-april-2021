@@ -50,4 +50,6 @@ Route::group([
         Route::apiresource('posts', \App\Http\Controllers\Api\Blog\PostController::class)->only(['store','destroy','update']);
         Route::put('posts/publish/{post}', [\App\Http\Controllers\Api\Blog\PostController::class, 'publish'])->name('post.publish');
     });
+    Route::apiresource('tags', \App\Http\Controllers\Api\Blog\TagController::class)->only(['index','store','destroy','show','update']);
+
 });

@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Phpsa\LaravelApiController\Http\Resources\ApiResource;
 
-class UserResource extends ApiResource
+class TagResource extends ApiResource
 {
 
     /**
@@ -19,10 +19,7 @@ class UserResource extends ApiResource
      *
      * @var array|null
      */
-    protected static $defaultFields = [
-        'id',
-        'name'
-    ];
+    protected static $defaultFields = null;
 
     /**
      * Allowable fields to be used.
@@ -46,11 +43,6 @@ class UserResource extends ApiResource
      */
     public function toArray($request)
     {
-
-        $data = parent::toArray($request);
-        if (isset($data['roles'])) {
-            $data['roles'] = collect($data['roles'])->map(fn($role) => $role['name'])->toArray();
-        }
-        return $data;
+        return parent::toArray($request);
     }
 }

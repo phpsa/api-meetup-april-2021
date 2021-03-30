@@ -39,7 +39,7 @@ class AuthServiceProvider extends ServiceProvider
                 $post = $post->id;
             }
 
-            return $user->hasPost($post) ? Response::allow() : Response::deny("You do not have access to this post");
+            return $post->user_id === $user->id ? Response::allow() : Response::deny("You do not have access to this post");
         });
     }
 }

@@ -47,4 +47,9 @@ class Post extends Model
             'published'
         ]);
     }
+
+    public function scopePublishedBefore(Builder $builder, $date)
+    {
+        return $builder->whereDate('published_at', '<=', $date);
+    }
 }

@@ -6,16 +6,15 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePostsTable extends Migration
+class CreateTagsTable extends Migration
 {
 
-        protected $permissions = [
-            'blog-post-create',
-            'blog-post-update',
-            'blog-post-delete',
-            'blog-post-restore'
+     protected $permissions = [
+            'blog-tag-create',
+            'blog-tag-update',
+            'blog-tag-delete',
+            'blog-tag-restore'
         ];
-
     /**
      * Run the migrations.
      *
@@ -23,19 +22,13 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('image')->nullable();
-            $table->text('description');
-            $table->foreignId('user_id')->nullable()->constrained('users');
-            $table->foreignId('category_id')->nullable()->constrained('categories');
+            $table->string('tag');
             $table->timestamps();
-            $table->timestamp('published_at')->nullable();
-            $table->softDeletes();
         });
 
-         $this->addPostPermissions();
+        $this->addTagPermissions();
     }
 
     /**
@@ -45,13 +38,11 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
-
-         $this->removePostPermissions();
+        Schema::dropIfExists('tags');
+        $this->removeTagPermissions();
     }
 
-
-     public function addPostPermissions()
+      public function addTagPermissions()
     {
 
 
@@ -66,7 +57,7 @@ class CreatePostsTable extends Migration
         app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
     }
 
-    public function removePostPermissions()
+    public function removeTagPermissions()
     {
 
         Permission::whereIn('name', $this->permissions)->delete();
