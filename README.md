@@ -31,6 +31,10 @@ In RESTful APIs, we use the HTTP verbs as actions, and the endpoints are the res
 
 **DELETE**: delete resource
 
+# For todays presentation
+
+we are going to build a quick api interaction with auth - using sanctum, blog with categories and user relationships, and time dependand a contact submission / view / response tool as a live coding session.
+
 # First we setup Laravel
 
 Laravel is great in that it is easy to setup, well documented and quick to install, in that Laravel sail is a quick start for docker (replacing homestead). We use Docksal (a tool that works with docker).
@@ -38,15 +42,15 @@ Head over to laravel.com and follow the install instructions that suit you.
 
 we add a few tools to our general setup
 
-doctrine/dbal - deals with DB column updates (SQLite testing )
-laravel/fortify - general Auth logic (without view logic built in - see breeze / jetstream for alternatives)
-laravel/sanctum - for SPA Auth (see postman for Oauth2)
-imanghafoori/laravel-microscope
-squizlabs/php_codesniffer
-beyondcode/laravel-self-diagnosis
-barryvdh/laravel-ide-helper
-nunomaduro/phpinsights
-roave/security-advisories:dev-latest
+-   doctrine/dbal - deals with DB column updates (SQLite testing )
+-   laravel/fortify - general Auth logic (without view logic built in - see breeze / jetstream for alternatives)
+-   laravel/sanctum - for SPA Auth (see postman for Oauth2)
+-   imanghafoori/laravel-microscope
+-   squizlabs/php_codesniffer
+-   beyondcode/laravel-self-diagnosis
+-   barryvdh/laravel-ide-helper
+-   nunomaduro/phpinsights
+-   roave/security-advisories:dev-latest
 
 There is no shortage of these tools.
 
@@ -55,6 +59,8 @@ There is no shortage of these tools.
 Setup Auth:
 
 Ok let us setup our first api endpoints to manage Users, roles and permissions.We use Spaties Roles / Permissions package so the next steps would be installing it and publishing the configs:
+
+Seeder allow us to preload specific information into the system.
 
 From there we create a role seeder to setup our roles, and see the database.
 We also create a user command to add a new user via the command line, thus not leaving any credentials in the system (there are many ways to deal with this. this is just a quick and easy option).

@@ -4,8 +4,9 @@ namespace App\Console\Commands;
 
 use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
+use App\Actions\Fortify\CreateNewUser;
 
 class AddUserCommand extends Command
 {
@@ -41,32 +42,24 @@ class AddUserCommand extends Command
     public function handle()
     {
         $email = $this->ask('What is your email?');
-
-        $existing = User::where('email', $email)->first();
-        if ($existing) {
-            $this->error('Sorry, that email is already registered in the system');
-            exit;
-        }
-
         $name = $this->ask('What is your name?');
-
         $password = $this->secret("Password");
         $conf = $this->secret("Confirm Password");
-        if ($password !== $conf) {
-            $this->error("passwords did not match");
-            exit;
-        }
 
         $isAdmin = $this->confirm("Assign Admin Role?", false);
 
-        User::unguard();
-        $user = User::create([
-            'name'              => $name,
-            'email'             => $email,
-            'password'          => Hash::make($password),
-            'email_verified_at' => now(),
-        ]);
-        User::reguard();
+        try {
+            $user = (new CreateNewUser())->create([
+
+                'name'                  => $name,
+                'email'                 => $email,
+                'password'              => $password,
+                'password_confirmation' => $conf
+
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            dd($e->errors());
+        }
 
         $role = Role::where('name', $isAdmin ? 'Admin' : 'User')->first();
 

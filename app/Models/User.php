@@ -16,7 +16,6 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasFactory, Notifiable;
     use HasApiTokens;
     use HasRoles;
-    use SoftDeletes;
     use HasPassword;
 
     /**
